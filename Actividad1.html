@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* Actividad 1. Creamos las Cookies
+        Creamos la primera  con el usuario Jesús y con fecha de expiración 1 de enero del 2026.*/
+        let userCookie="Jesus";
+        document.cookie="user="+encodeURIComponent(userCookie)+"; expires=Fri, 01 Jan 2026 00:00:00 UTC";
+
+        // Creamos la segunda Cookie con el idioman elegido y con fecha de expiración 1 de enero 2026.
+        let langCookie="es";
+        document.cookie="lang= "+encodeURIComponent(langCookie)+"; expires=Fri, 01 Jan 2026 00:00:00 UTC";
+
+        // Comprobamos por consola que las cookies se han creado
+        console.log("Cookies creadas: "+document.cookie);
+    </script>
+        
+        <!-- Actividad 2. Creamos un botón que muestre las Cookies del documento. -->
+
+        <button type="button" onclick="alert(document.cookie)">Ver las Cookies</button>
+        <br><br>
+
+        <!-- Actividad 3. El boton anterior muestra el contenido de ambas cookies, crea 
+         dos botones más que muestren el contenido especifico de cada cookie. -->
+        
+        <button type="button" onclick="mostrarCookies('user')">Ver Cookies de Usuario</button>
+        <button type="button" onclick="mostrarCookies('lang')">Ver Cookies de Idioma</button>
+
+        <script>
+            function mostrarCookies(nombre){
+                const cookies = document.cookie.split("; ");
+
+                for (let i = 0; i < cookies.length; i++){
+                    const [key, value] = cookies[i].split('=');
+                    if (key === nombre){
+                        alert(`${nombre}: ${decodeURIComponent(value)}`);
+                        return;
+                    }
+                }
+                alert(`La cookie creada "${nombre}" no existe`);
+            }
+        </script>
+
+        <!-- Actividad 4. Programa que nos muestre si es la primera vez que accedemos a la página web.
+         Además, muestra si es la primer vez que accedemos en el día de hoy. -->
+        <script>
+
+        if (!localStorage.getItem("contador")){
+            localStorage.setItem("contador", 0);
+            localStorage.setItem("fecha", new Date().toLocaleDateString());
+        }
+        let numero = parseInt(localStorage.getItem("contador"));
+        let fecha = localStorage.getItem("fecha");
+        let hoy = new Date().toLocaleDateString();
+            if (numero === 0){
+                window.alert("Bienvenido, es la primera vez que usted accede a la página web");
+            } if (fecha !== hoy) {
+                numero = 0;
+                localStorage.setItem("contador", 0);
+                localStorage.setItem("fecha", hoy);
+            }
+            numero++;
+            localStorage.setItem("contador", numero)
+            // window.alert("Hoy numero contador: " + numero);
+            window.alert(`Hoy ${fecha} has entrado ${numero} de veces a la web.`); 
+        
+        </script>
+
+        <!-- Añade un último botón a la página. Crea una función que contabilice el número de veces
+        que se hace clic en dicho botón. Almacena el número de clicks realizados en el
+        almacenamiento local. -->
+        <br><br>
+        <button type="button" onclick="clicks()">Numero de clicks</button>
+        <script>
+
+            if (!localStorage.getItem('contador2')){
+            localStorage.setItem('contador2', 0);
+            }
+
+            function clicks(){
+                let contador2 = parseInt(localStorage.getItem('contador2'));
+                contador2++;
+                localStorage.setItem('contador2', contador2);
+                window.alert(`Hoy hemos echo click en el boton ${contador2} veces`);
+            }
+        </script>
+    </body>
+</html>
